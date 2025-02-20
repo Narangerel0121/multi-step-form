@@ -55,19 +55,21 @@ export default function Home() {
     setCurrentStep(localStorage.currentStep)
   }, [])
 
+  const isEqual = currentStep == steps.length
+
   return (
-    <div className="p-8 bg-white rounded-lg w-[460px] h-[685px] relative">
-      <FormHeader />
+    <div className={"p-8 bg-white rounded-lg w-[460px] h-[685px] relative"}>
+      <FormHeader title={isEqual ? "You're All Set" : "Join us! 😎"} description={isEqual ? "We have recieved your submission. Thank you!" :"Please provide all current information accurately."} />
 
       <div className="mt-7 space-y-2">
-        <Component
+        {currentStep < steps.length && <Component
           formValues={formValues}
           setFormValues={setFormValues}
           formErrors={formErrors}
           setFormErrors={setFormErrors}
           nextStep={nextStep}
           prevStep={prevStep}
-          currentStep={currentStep} />
+          currentStep={currentStep} />}
       </div>
 
     </div>

@@ -9,6 +9,7 @@ export const ProfileInfoStep = ({ formValues, setFormValues, prevStep, nextStep,
 
     const onChange = (event) => {
         setFormValues((prev) => ({ ...prev, [event.target.name]: event.target.value }))
+        setFormErrors((prev) => ({ ...prev, [event.target.name]: ""}))
     }
 
     const handleImage = (event) => {
