@@ -1,10 +1,11 @@
 import { ContinueButton } from "./ContinueButton"
 import { InputFiled } from "./InputField"
 
-export const ContactInfoStep = ({ formValues, setFormValues, nextStep, currentStep, formErrors, setFormErrors }) => {
+export const ContactInfoStep = ({ formValues, setFormValues, prevStep, nextStep, currentStep, formErrors, setFormErrors }) => {
 
     const onChange = (event) => {
         setFormValues((prev) => ({ ...prev, [event.target.name]: event.target.value }))
+        setFormErrors((prev) => ({ ...prev, [event.target.name]: '' }))
     }
 
     const handleNext = (event) => {
@@ -12,22 +13,36 @@ export const ContactInfoStep = ({ formValues, setFormValues, nextStep, currentSt
         event.preventDefault()
 
         if (!formValues.email) {
-            setFormErrors((prev) => ({ ...prev, email: "Email haygaa boglono uu" }))
+            setFormErrors((prev) => ({ ...prev, email: "Hooson baina" }))
+        }
+
+        const emailRegexPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegexPattern.test(formValues.email)) {
+            setFormErrors((prev) => ({ ...prev, email: "Tanii mail haygiin butets buruu baina" }))
         }
 
         if (!formValues.phoneNumber) {
-            setFormErrors((prev) => ({ ...prev, phoneNumber: "Dugaaraa boglono uu" }))
+            setFormErrors((prev) => ({ ...prev, phoneNumber: "Hooson baina" }))
+        }
+
+        const phoneNumberRegexPattern = /^\+?\d{8}$/;
+        if (!phoneNumberRegexPattern.test(formValues.phoneNumber)) {
+            setFormErrors((prev) => ({ ...prev, phoneNumber: "Tanii utasnii dugaarnii butets buruu baina" }))
         }
 
         if (!formValues.password) {
-            setFormErrors((prev) => ({ ...prev, password: "Kodoo boglono uu" }))
+            setFormErrors((prev) => ({ ...prev, password: "Hooson baina" }))
         }
 
         if (!formValues.confirmPassword) {
-            setFormErrors((prev) => ({ ...prev, confirmPassword: "Dahin kodoo boglono uu" }))
+            setFormErrors((prev) => ({ ...prev, confirmPassword: "Hooson baina" }))
         }
 
-        if(!formValues.email || !formValues.phoneNumber || !formValues.password || !formValues.confirmPassword) {
+        if(formValues.password != formValues.confirmPassword && formValues.confirmPassword) {
+            setFormErrors((prev) => ({ ...prev, confirmPassword : "Password taarahgui baina"}))
+        }
+
+        if (!formValues.email || !formValues.phoneNumber || !formValues.password || !formValues.confirmPassword) {
             return;
         }
 
@@ -38,17 +53,17 @@ export const ContactInfoStep = ({ formValues, setFormValues, nextStep, currentSt
     return (
         <form onSubmit={handleNext}>
 
-            <InputFiled required label="Email" name="email" onChange={onChange} placeholder={"Enter your email"} error={formErrors['email']} />
+            <InputFiled type="email" required label="Email" name="email" onChange={onChange} placeholder={"Enter your email"} error={formErrors['email']} value={formValues.email}/>
+ 
+            <InputFiled required label="Phone number" name="phoneNumber" onChange={onChange} placeholder={"Enter your phone number"} error={formErrors['phoneNumber']} value={formValues.phoneNumber} />
 
-            <InputFiled required label="Phone number" name="phoneNumber" onChange={onChange} placeholder={"Enter your phone number"} error={formErrors['phoneNumber']} />
+            <InputFiled type="password" required label="Password" name="password" onChange={onChange} placeholder={"Enter your password"} error={formErrors['password']} value={formValues.password} />
 
-            <InputFiled required label="Password" name="password" onChange={onChange} placeholder={"Enter your password"} error={formErrors['password']} />
-
-            <InputFiled required label="Confirm password" name="confirmPassword" onChange={onChange} placeholder={"Enter your password again"} error={formErrors['confirmPassword']} />
+            <InputFiled type="password" required label="Confirm password" name="confirmPassword" onChange={onChange} placeholder={"Enter your password again"} error={formErrors['confirmPassword']} value={formValues.confirmPassword} />
 
 
             <ContinueButton
-                currentStep={currentStep} />
+                currentStep={currentStep} prevStep={prevStep} />
         </form>
     )
 }
