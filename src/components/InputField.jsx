@@ -1,4 +1,4 @@
-export const InputFiled = ({label, name, onChange, placeholder, error, required, value, type }) => {
+export const InputField = ({label, name, onChange, placeholder, error, required, value, type}) => {
     return (
         <div className="space-y-1">
         <label className="text-sm font-semibold text-[#334155] ">{label}

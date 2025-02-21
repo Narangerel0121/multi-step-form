@@ -33,14 +33,15 @@ export default function Home() {
   })
 
   const steps = [UserInfoStep, ContactInfoStep, ProfileInfoStep];
+  const length = steps.length
   const Component = steps[currentStep];
 
   const prevStep = () => {
     setCurrentStep((prev) => prev - 1);
   }
-  
+
   const nextStep = () => {
-    if(currentStep == steps.length -1) return;
+    if (currentStep == steps.length) return;
     setCurrentStep((prev) => prev + 1);
 
     window.localStorage.setItem("multi-step-form", JSON.stringify({ formValues, currentStep: currentStep + 1 }));
@@ -49,17 +50,17 @@ export default function Home() {
   useEffect(() => {
     const localStorage = JSON.parse(window.localStorage.getItem("multi-step-form"))
 
-    if(!localStorage) return;
+    if (!localStorage) return;
 
-    setFormValues(localStorage.formValues)
-    setCurrentStep(localStorage.currentStep)
+    // setFormValues(localStorage.formValues)
+    // setCurrentStep(localStorage.currentStep)
   }, [])
 
   const isEqual = currentStep == steps.length
 
   return (
-    <div className={"p-8 bg-white rounded-lg w-[460px] h-[685px] relative"}>
-      <FormHeader title={isEqual ? "You're All Set" : "Join us! 😎"} description={isEqual ? "We have recieved your submission. Thank you!" :"Please provide all current information accurately."} />
+    <div className={`${isEqual ? "h-fit" : ""} p-8 bg-white rounded-lg w-[460px] h-[685px] relative`}>
+      <FormHeader title={isEqual ? "You're All Set 🔥" : "Join us! 😎"} description={isEqual ? "We have recieved your submission. Thank you!" : "Please provide all current information accurately."} />
 
       <div className="mt-7 space-y-2">
         {currentStep < steps.length && <Component
@@ -69,7 +70,9 @@ export default function Home() {
           setFormErrors={setFormErrors}
           nextStep={nextStep}
           prevStep={prevStep}
-          currentStep={currentStep} />}
+          currentStep={currentStep}
+          length={length}
+          />}
       </div>
 
     </div>

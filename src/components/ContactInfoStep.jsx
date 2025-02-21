@@ -1,7 +1,7 @@
 import { ContinueButton } from "./ContinueButton"
-import { InputFiled } from "./InputField"
+import { InputField } from "./InputField"
 
-export const ContactInfoStep = ({ formValues, setFormValues, prevStep, nextStep, currentStep, formErrors, setFormErrors }) => {
+export const ContactInfoStep = ({ formValues, setFormValues, prevStep, nextStep, currentStep, formErrors, setFormErrors, length }) => {
 
     const onChange = (event) => {
         setFormValues((prev) => ({ ...prev, [event.target.name]: event.target.value }))
@@ -53,17 +53,17 @@ export const ContactInfoStep = ({ formValues, setFormValues, prevStep, nextStep,
     return (
         <form onSubmit={handleNext}>
 
-            <InputFiled type="email" required label="Email" name="email" onChange={onChange} placeholder={"Enter your email"} error={formErrors['email']} value={formValues.email}/>
+            <InputField type="email" required label="Email" name="email" onChange={onChange} placeholder={"Enter your email"} error={formErrors['email']} value={formValues.email}/>
  
-            <InputFiled required label="Phone number" name="phoneNumber" onChange={onChange} placeholder={"Enter your phone number"} error={formErrors['phoneNumber']} value={formValues.phoneNumber} />
+            <InputField required label="Phone number" name="phoneNumber" onChange={onChange} placeholder={"Enter your phone number"} error={formErrors['phoneNumber']} value={formValues.phoneNumber} />
 
-            <InputFiled type="password" required label="Password" name="password" onChange={onChange} placeholder={"Enter your password"} error={formErrors['password']} value={formValues.password} />
+            <InputField type="password" required label="Password" name="password" onChange={onChange} placeholder={"Enter your password"} error={formErrors['password']} value={formValues.password} />
 
-            <InputFiled type="password" required label="Confirm password" name="confirmPassword" onChange={onChange} placeholder={"Enter your password again"} error={formErrors['confirmPassword']} value={formValues.confirmPassword} />
+            <InputField type="password" required label="Confirm password" name="confirmPassword" onChange={onChange} placeholder={"Enter your password again"} error={formErrors['confirmPassword']} value={formValues.confirmPassword} />
 
 
             <ContinueButton
-                currentStep={currentStep} prevStep={prevStep} />
+                currentStep={currentStep} prevStep={prevStep} length={length} />
         </form>
     )
 }
