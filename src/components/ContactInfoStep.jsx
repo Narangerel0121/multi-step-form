@@ -10,41 +10,54 @@ export const ContactInfoStep = ({ formValues, setFormValues, prevStep, nextStep,
 
     const handleNext = (event) => {
 
-        event.preventDefault()
+        event.preventDefault();
+
+        let hasError = false;
 
         if (!formValues.email) {
+            hasError = true;
             setFormErrors((prev) => ({ ...prev, email: "Hooson baina" }))
         }
 
         const emailRegexPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegexPattern.test(formValues.email)) {
-            setFormErrors((prev) => ({ ...prev, email: "Tanii mail haygiin butets buruu baina" }))
+            hasError = true;
+            setFormErrors((prev) => ({ ...prev, email: "Tanii mail haygiin butets buruu baina" })) 
         }
 
         if (!formValues.phoneNumber) {
+            hasError = true;
             setFormErrors((prev) => ({ ...prev, phoneNumber: "Hooson baina" }))
         }
 
         const phoneNumberRegexPattern = /^\+?\d{8}$/;
         if (!phoneNumberRegexPattern.test(formValues.phoneNumber)) {
+            hasError = true;
             setFormErrors((prev) => ({ ...prev, phoneNumber: "Tanii utasnii dugaarnii butets buruu baina" }))
         }
 
         if (!formValues.password) {
+            hasError = true;
             setFormErrors((prev) => ({ ...prev, password: "Hooson baina" }))
         }
 
         if (!formValues.confirmPassword) {
+            hasError = true;
             setFormErrors((prev) => ({ ...prev, confirmPassword: "Hooson baina" }))
         }
 
         if(formValues.password != formValues.confirmPassword && formValues.confirmPassword) {
-            setFormErrors((prev) => ({ ...prev, confirmPassword : "Password taarahgui baina"}))
-        }
+            hasError = true;
+            setFormErrors((prev) => ({ ...prev, confirmPassword : "Password taarahgui baina"})) 
+        } 
 
-        if (!formValues.email || !formValues.phoneNumber || !formValues.password || !formValues.confirmPassword) {
+        console.log({formValues, formErrors})
+
+
+        if (hasError) {
             return;
         }
+
 
         nextStep();
 
