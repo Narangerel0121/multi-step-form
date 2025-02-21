@@ -52,8 +52,8 @@ export default function Home() {
 
     if (!localStorage) return;
 
-    // setFormValues(localStorage.formValues)
-    // setCurrentStep(localStorage.currentStep)
+    setFormValues(localStorage.formValues)
+    setCurrentStep(localStorage.currentStep)
   }, [])
 
   const isEqual = currentStep == steps.length
